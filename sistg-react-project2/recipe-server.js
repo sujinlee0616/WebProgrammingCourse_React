@@ -6,6 +6,7 @@ const port=3355; // 내 맘대로 정하면 됨
     - Spring에서 Tomcat 서버 돌리고
  */
 // 여기선 Spring에서 할 수 있는 왠만한 것 다 됨
+// 얘는 변경사항 있으면 다시 terminal에서
 
 app.listen(port,()=>{
     console.log("Start Server....","http://localhost:3355")
@@ -56,8 +57,19 @@ app.get('/recipe_data',(req,res)=>{
            - MongoDB는 배열이 아님 ==> toArray는 {} {} {} {} ... {} 이런 애들을 [{} {} {} {}] 이렇게 배열로 만들어 준다.
            - (Oracle에서 배열이 아니라서 ArrayList로 만드는 것과 유사.
            - docs=[{} {} {} {} ] 요렇게 된다. */
+    })
+})
 
-
+// [목록] 총 페이지 구하기
+app.get('/total_data',(req,res)=>{
+    var url="mongodb://211.238.142.181:27017";
+    MongoConnect.connect(url,(err,client)=>{
+        var db=client.db('mydb');
+        db.collection('recipe').find({}).count((err,count)=>{
+            res.json({total:Math.ceil(count/12.0)})
+            client.close()
+            return count;
+        })
     })
 })
 

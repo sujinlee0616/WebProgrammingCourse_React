@@ -14,6 +14,7 @@ export default function Recipe(props) {
         }
      */
 
+    // [Recipe 데이터 가져옴]
     useEffect(()=>{
         axios.get('http://localhost:3355/recipe_data',{
             params:{
@@ -24,7 +25,7 @@ export default function Recipe(props) {
         })
         // 여기서 axios.get했으니까 recipe-server.js에서 app.get 해야함
         // 물론, axios.post도 있다.
-    })
+    },[recipe])  // deps:[]   <== 데이터가 갱신될 때만 수행하라
     /*  위의 useEffect 코딩은, 이전에 함수가 아니라 class로 React 짰을 때의 componentWillMount()와 같다. 데이터를 가지고 온다. */
     /*
         [참고] 함수 안에 함수를 만드는 것은 불가능
@@ -38,6 +39,40 @@ export default function Recipe(props) {
         class A{ class B{} }
      */
 
+    // [Total Page 데이터 가져옴]
+    useEffect(()=>{
+        axios.get('http://localhost:3355/total_data').then((result)=>{
+            setTotal(result.data.total)
+        })
+    },[total])
+
+    // [이벤트 처리]
+    // 1. 이전 버튼
+    const onPrev=()=>{
+        setPage(page>1?page-1:page)
+        axios.get('http://localhost:3355/recipe_data',{
+            params:{
+                page:page // http://localhost:3355/recipe_data?page='페이지변수값' 이렇게 됨
+            }
+        }).then((result)=>{
+            setRecipe(result.data);
+        })
+    }
+    // 2. 다음 버튼
+    const onNext=()=>{
+        setPage(page<total?page+1:page)
+        axios.get('http://localhost:3355/recipe_data',{
+            params:{
+                page:page // http://localhost:3355/recipe_data?page='페이지변수값' 이렇게 됨
+            }
+        }).then((result)=>{
+            setRecipe(result.data);
+        })
+    }
+    
+    
+    
+    // render()
     const html=recipe.map((m)=>
         <div className="col-md-3">
             <div className="thumbnail">
@@ -57,8 +92,9 @@ export default function Recipe(props) {
                 {html}
             </div>
             <div className={"row"}>
-                <button className={"btn btn-lg btn-primary"}>이전</button>
-                <button className={"btn btn-lg btn-danger"}>다음</button>
+                <button className={"btn btn-lg btn-primary"} onClick={()=>onPrev()}>이전</button>
+                {page} page / {total} pages
+                <button className={"btn btn-lg btn-danger"} onClick={()=>onNext()}>다음</button>
             </div>
         </React.Fragment>
     )

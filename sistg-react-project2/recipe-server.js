@@ -1,6 +1,9 @@
 const express=require("express")
 const app=express();
 const port=3355; // 내 맘대로 정하면 됨
+// ★★★★★★[MongoDB 연결]★★★★★★
+// - WebStorm Terminal 하나는 요거 mongoDB 돌리고, (node recipe-server)
+//   다른 Terminal 하나는 React 돌려야. (npm start)
 /*  ★★★ 서버 ★★★
     - 채팅 서버 하나 node.js에서 돌리고
     - Spring에서 Tomcat 서버 돌리고
@@ -30,15 +33,14 @@ const MongoConnect=require("mongodb").MongoClient; // MongoDB 연결 객체 생�
     public String ...
  */
 
+// [레시피 목록] MongoDB 연결, 데이터 가져오기
 app.get('/recipe_data',(req,res)=>{
-    /*res.send('Hello This is recipe data')*/ /* send('문자열') */
-
     // 페이지 받아오기
     var page=req.query.page; // Java에서의 String page=request.getParameter("page");
     // url이 '/recipe_data?page=1' 요런식으로 들어옴 ==> 'req.query.변수명'에서 변수명은 url 파라미터명과 일치해야함.
     var rowSize=12; // 한 페이지에 20개 출력
     var skip=(page)*(rowSize-1);
-    var url="mongodb://211.238.142.181:27017"
+    var url="mongodb://211.238.142.181:27017" // 선생님이 선생님 컴에 만들어놓으신 MongoDB에 연결...
     // MongoDB와 연결 => 연결 객체 얻기
     // MongoClient MongoConnect=new MongoClient()
     /*                  Oracle          MongoDB
@@ -60,7 +62,7 @@ app.get('/recipe_data',(req,res)=>{
     })
 })
 
-// [목록] 총 페이지 구하기
+// [레시피 목록] 총 페이지 구하기
 app.get('/total_data',(req,res)=>{
     var url="mongodb://211.238.142.181:27017";
     MongoConnect.connect(url,(err,client)=>{
@@ -73,9 +75,57 @@ app.get('/total_data',(req,res)=>{
     })
 })
 
+// [셰프 목록] 셰프 데이터 가져오기
+app.get('/chef_data',(req,res)=>{
+    var page=req.query.page;
+    var rowSize=50;
+    var skip=(page)*(rowSize-1);
+    var url="mongodb://211.238.142.181:27017"
 
+    MongoConnect.connect(url,function (err,client) {
+        var db=client.db('mydb');
 
+        db.collection('chef').find({}).skip(skip).limit(rowSize).toArray(function (err,docs) {
+            res.json(docs);
+            client.close();
+        })
+    })
+})
 
+// [셰프 목록] 총 페이지 구하기
+app.get('/chef_total',(req,res)=>{
+    var url="mongodb://211.238.142.181:27017";
+    MongoConnect.connect(url,(err,client)=>{
+        var db=client.db('mydb');
+        db.collection('chef').find({}).count((err,count)=>{
+            res.json({total:Math.ceil(count/50.0)})
+            client.close()
+            return count;
+        })
+    })
+})
+
+// xml2js: XML을 JSON으로 변경해주는 라이브러리.
+const xml2js=require("xml2js")
+
+// request: 다른 서버로 연결할 때 사용.
+const request=require("request")
+
+// [네이버 뉴스 크롤링]
+app.get("/recipe_news",(req,res)=>{
+    var query=encodeURIComponent(req.query.fd);
+    var url="http://newssearch.naver.com/search.naver?where=rss&query="+query;
+    var parser=new xml2js.Parser({
+        explicitArray:false
+    })
+    request({url:url},(err,request,xml)=>{
+        //console.log(xml); // 브라우저에서 'http://localhost:3355/recipe_news?fd=야구' 입력하고 엔터치면 WebStorm Terminal에 데이터 출력됨
+        parser.parseString(xml,function(err,pJson){ //
+            console.log(pJson.rss.channel.item);
+            res.json(pJson.rss.channel.item);
+        })
+    })
+})
 
 
 

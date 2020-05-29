@@ -3,10 +3,11 @@ import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header'
 import Home from './components/Home'
-import Chef from './components/Chef'
 import Recipe from './components/Recipe'
-import RecipeNews from './components/RecipeNews'
+import Chef from './components/Chef'
 import RecipeRecommend from './components/RecipeRecommend'
+import RecipeNews from './components/RecipeNews'
+import RecipeDetail from './components/RecipeDetail'
 import {BrowserRouter as Router,Route,Switch} from "react-router-dom";
 
 function App() {
@@ -25,6 +26,8 @@ function App() {
               <Route path={"/chef"} component={Chef}/>
               <Route path={"/recommend"} component={RecipeRecommend}/>
               <Route path={"/news"} component={RecipeNews}/>
+              <Route path={"/detail/:no"} component={RecipeDetail}/>
+              {/* <Route ★★path={"/주소/:변수명"}★★ component={컴포넌트명}/> */}
             </Switch>
           </div>
       </div>

@@ -4,10 +4,9 @@ const port=3355; // 내 맘대로 정하면 됨
 // ★★★★★★[MongoDB 연결]★★★★★★
 // - WebStorm Terminal 하나는 요거 mongoDB 돌리고, (node recipe-server)
 //   다른 Terminal 하나는 React 돌려야. (npm start)
-/*  ★★★ 서버 ★★★
-    - 채팅 서버 하나 node.js에서 돌리고
-    - Spring에서 Tomcat 서버 돌리고
- */
+
+/*  [서버 ]
+    - 추후에 채팅 서버 하나 node.js에서 돌리고, Spring에서 Tomcat 서버 돌려서 채팅 만들거임.  */
 // 여기선 Spring에서 할 수 있는 왠만한 것 다 됨
 // 얘는 변경사항 있으면 다시 terminal에서
 

@@ -9,6 +9,7 @@
  3. sistg-redux-project    
  - 영화 목록/상세페이지/뉴스/인기뉴스 출력     
  - redux 사용     
+ - 선생님 컴퓨터 MongoDB 연결해서 데이터 가져왔음    
 
 
 # WebProgrammingCourse_React      

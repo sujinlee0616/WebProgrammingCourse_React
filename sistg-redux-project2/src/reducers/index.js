@@ -22,7 +22,8 @@ export default combineReducers({
 
 /*  [구조]
     state={
-        foods:{
+        foods:{    <==== 얘네는 모든 Component가 공통으로 쓰는 state.
+                         이 외에도 FoodNews.js에서만 쓰는 fd도, Recipe.js에서만 쓰이는 page도 state에 저장된다.
             news:[],
             recipe:[],
             category:[],

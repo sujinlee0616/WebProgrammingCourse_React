@@ -2,23 +2,46 @@ import {FETCH_NEWS, FETCH_RECIPE} from "./types";
 import axios from 'axios';
 
 // [fetchNews]
-export const fetchNews=(fd)=>dispatch=>{
+export const fetchNews=(fd)=>dispatch=>{ // 함수(fetchNews) 안에 함수(dispatch)를 받은 것...
     // dispatch: reducer에게 값을 전달 (xxReducer.js의 function을 자동호출함)
     // =====> reducer: state 값을 변경함.
     // ===> store: 변경된 state 값을 저장함.
+    console.log('foodActions.js - fetchNews. fd='+fd)
     axios.get('http://localhost:3355/news',{
         params:{
             fd:fd // fd: 검색어
         }
-    }).then(news=>dispatch({
+    }).then(news=>dispatch({ // .then((news)=>dispatch({... 이렇게 해도 됨
         type:FETCH_NEWS, // type: Java에서의 @RequestMapping("/news.do")와 동일한 역할
         payload:news.data
         // reducer는 type이 FETCH_NEWS 일 때, payload값인 news.data 값을 저장한다.
     }))
 }
+// 위의 함수는 아래와 같이도 코딩할 수 있다.
+/*
+export function fetchNews(fd){
+    console.log("fetchNews Call..")
+    // Redux라이브러리에 디스패치 메서드를 함수에 인수로 보내서
+    // 함수가 직접 액션을 보낼 수 있도록 한다.
+    return function(dispatch){
+        //console.log(dispatch)
+        axios.get('http://localhost:3355/news',{
+            params:{
+                fd:fd
+            }
+        }).then(news=>dispatch({
+            type:FETCH_NEWS,
+            payload:news.data
+        }))
+        // 함수가 직접 액션을 보낼 수 있도록 한다.
+    }
+}
+ */
+
 
 // [페이지]
 export const fetchRecipe=(page)=>dispatch=>{
+    console.log('foodActions.js - fetchRecipe')
     axios.get('http://localhost:3355/recipe',{
         params:{
             page:page
@@ -28,6 +51,7 @@ export const fetchRecipe=(page)=>dispatch=>{
         payload:recipes.data
     }))
 }
+
 
 /* ★★★★ [전체 Flow] ★★★★★
    1. React Component: 화면 UI. 이벤트 발생(ex. 클릭, 해당 화면 켜짐)

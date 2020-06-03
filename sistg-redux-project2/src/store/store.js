@@ -5,17 +5,18 @@ import {createLogger} from "redux-logger/src";  // reducer폴더의 index.js에 
 
 const logger=createLogger();
 const initialState={};
-
 const middleware=[thunk,logger];
 
 export const store=createStore(
     rootReducer,
     initialState,
     compose(
-        applyMiddleware(...middleware)
+        applyMiddleware(...middleware),
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // dev tool
     )
-)
 
+)
+// Devtool: http://extension.remotedev.io/#usage   <== Chrome extension임.
 
 
 

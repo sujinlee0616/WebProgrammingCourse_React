@@ -1,5 +1,6 @@
-import {FETCH_NEWS} from "../actions/types";
+import {FETCH_NEWS,FETCH_RECIPE} from "../actions/types";
 
+// 전역변수처럼, 아무곳에서나 다 쓸 수 있음
 const initialState={
     news:[],  // 여러개의 데이터 ==> 배열로
     recipe:[],
@@ -11,7 +12,6 @@ const initialState={
     recommend_food:[]
 }
 
-
 export default function (state=initialState,action) {
     switch (action.type) {
         case FETCH_NEWS:
@@ -19,8 +19,19 @@ export default function (state=initialState,action) {
                 ...state,
                 news:action.payload
             }
+        case FETCH_RECIPE:
+            return{
+                ...state,
+                recipe:action.payload
+            }
         default:
             return state
     }
 
 }
+
+/*
+    React ==> 이벤트 발생 (시작하는 것도 이벤트임. 시작하면 초기값 가져옴) ==> action을 보냄 (action에서는 type과 payload 데이터를 갖고 있음)
+    ==> reducer에게 데이터가 넘어가면, 데이터를 받아서 state 값을 변경시킴 ===> re-rendering됨. ==> 화면 변경됨.
+ */
+

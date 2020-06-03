@@ -4,14 +4,10 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-// 2020.06.03(수)
-import {Provider} from "react-redux";
-import {store as store} from './store/store';
-
 ReactDOM.render(
-    <Provider store={store}>  {/* Provider가 store를 <App/>의 모든 곳에서 사용할 수 있도록 해준다. */}
-        <App />
-    </Provider>,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById('root')
 );
 

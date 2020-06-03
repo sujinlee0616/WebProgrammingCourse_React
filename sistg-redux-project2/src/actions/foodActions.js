@@ -1,4 +1,4 @@
-import {FETCH_NEWS} from "./types";
+import {FETCH_NEWS, FETCH_RECIPE} from "./types";
 import axios from 'axios';
 
 // [fetchNews]
@@ -8,7 +8,7 @@ export const fetchNews=(fd)=>dispatch=>{
     // ===> store: 변경된 state 값을 저장함.
     axios.get('http://localhost:3355/news',{
         params:{
-            fd:fd
+            fd:fd // fd: 검색어
         }
     }).then(news=>dispatch({
         type:FETCH_NEWS, // type: Java에서의 @RequestMapping("/news.do")와 동일한 역할
@@ -17,8 +17,20 @@ export const fetchNews=(fd)=>dispatch=>{
     }))
 }
 
-/* [전체 Flow]
-   1. React Component: 화면 UI. 이벤트 발생(ex. 클릭)
+// [페이지]
+export const fetchRecipe=(page)=>dispatch=>{
+    axios.get('http://localhost:3355/recipe',{
+        params:{
+            page:page
+        }
+    }).then(recipes=>dispatch({
+        type:FETCH_RECIPE,
+        payload:recipes.data
+    }))
+}
+
+/* ★★★★ [전체 Flow] ★★★★★
+   1. React Component: 화면 UI. 이벤트 발생(ex. 클릭, 해당 화면 켜짐)
    2. Action:
      - actions 폴더의 foodAction.js
      - 이벤트가 발생하면 데이터를 읽고, (axios 라이브러리 사용해서 유저가 입력한 검색어 'fd'를 받았음)

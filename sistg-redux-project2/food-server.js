@@ -7,6 +7,8 @@ const app=express();
 //    ===> 브라우저에 http://localhost:3355/news?fd=홍대맛집 입력 ===> WebStorm의 콘솔에 데이터가 출력됨을 확인할 수 있다.
 //    - 기존 서버 돌던거 중지하고 다시 서버 돌리고 싶으면 Terminal에서 Ctrl+C 하면 명령어 입력하는 칸 나옴.
 
+
+// [CORS 처리]
 app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -23,7 +25,8 @@ app.listen(3355,()=>{
     - accept() ==> 전화로 따지면... '연결된 상태'.
  */
 
-// [뉴스 가져오기]
+
+// ============================== [네이버 뉴스 가져오기] ==============================
 // request라는 라이브러리를 가져와라 (import 처럼)
 // 다른 사이트 서버를 연결해서 데이터 읽어올거임.
 const request=require("request")
@@ -58,10 +61,28 @@ app.get("/news",(req,res)=>{
         parser.parseString(xml,function (err,pJson) {
             // console.log(pJson)   // 전체 JSON
             console.log(pJson.rss.channel.item)  // JSON 중에서 우리가 필요한 데이터: item
+            res.json(pJson.rss.channel.item) // 데이터 전송
         })
     })
-
-
 })
 
+
+// ============================== [Recipe 데이터] ==============================
+const Client=require("mongodb").MongoClient
+app.get('/recipe',(req,res)=>{
+    var page=req.query.page; // Java 코딩으로 치면 request.getParameter("page") 임.
+    var rowSize=9;
+    var skip_data=rowSize*(page-1);
+    var url="mongodb://211.238.142.181:27017"; // 선생님 컴터
+    // 연결
+    Client.connect(url,(err,client)=>{
+        var db=client.db("mydb");
+        db.collection("recipe").find({}).skip(skip_data).limit(rowSize)
+            .toArray((err,docs)=>{
+                res.json(docs);
+                client.close();
+            });
+    })
+
+})
 

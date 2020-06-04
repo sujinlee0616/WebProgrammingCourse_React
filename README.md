@@ -11,11 +11,13 @@
   redux 사용      
   선생님 컴퓨터 MongoDB 연결해서 데이터 가져왔음   
  4. sistg-spring-project       
-  Spring에서 Tomcat 돌려서 생성한 데이터와 연결 (SpringReactProject)          
- 5. sistg-redux-project2          
- - Terminal 1: node food-server       
- - Terminal 2: npm start          
-   
+  Spring에서 Tomcat 돌려서 생성한 데이터와 연결 (SpringReactProject)       
+  서버 두 개 돌려야함: Terminal 1: node food-server / Terminal 2: npm start       
+ 5. sistg-redux-project2 : React, Redux, ReactHooks          
+  webpack으로 bundle.js 생성      
+  Terminal1: node food-server  / Terminal 2: npm run build       
+      
+       
 
 ### WebProgrammingCourse_React      
  1. sistg-react-project

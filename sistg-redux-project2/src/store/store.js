@@ -7,6 +7,7 @@ const logger=createLogger();
 const initialState={};
 const middleware=[thunk,logger];
 
+// store에 state 값이 저장됨 ★★★
 export const store=createStore(
     rootReducer,
     initialState,

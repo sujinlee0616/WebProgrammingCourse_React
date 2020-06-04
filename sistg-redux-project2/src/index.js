@@ -1,21 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+// import './index.css';   // bundle.js 하려면 css 있으면 안 됨
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+// import * as serviceWorker from './serviceWorker'; // bundle.js 하려고 내부에서 사용한 웹팩 주석처리했음
 
 // 2020.06.03(수)
-import {Provider} from "react-redux";
-import {store as store} from './store/store';
+
 
 ReactDOM.render(
-    <Provider store={store}>  {/* Provider가 store를 <App/>의 모든 곳에서 사용할 수 있도록 해준다. */}
-        <App />
-    </Provider>,
+  <App />,
   document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// serviceWorker.unregister(); // bundle.js 하기 위해 주석처리
+

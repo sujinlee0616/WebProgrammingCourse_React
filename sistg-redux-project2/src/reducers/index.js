@@ -20,7 +20,7 @@ export default combineReducers({
     // foods: foodRecuder.js ==> news[], recipe[], category[]... 등 모든 데이터를 모아놓은 것.
 })
 
-/*  [구조]
+/*  [state 구조]
     state={
         foods:{    <==== 얘네는 모든 Component가 공통으로 쓰는 state.
                          이 외에도 FoodNews.js에서만 쓰는 fd도, Recipe.js에서만 쓰이는 page도 state에 저장된다.

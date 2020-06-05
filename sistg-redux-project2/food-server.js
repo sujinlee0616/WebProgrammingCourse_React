@@ -82,7 +82,7 @@ app.get('/recipe',(req,res)=>{ // http://localhost:3355/recipe하면 데이터 �
     var skip_data=rowSize*(page-1);
     var url="mongodb://211.238.142.181:27017"; // 선생님 컴터
     // 연결
-    Client.connect(url,(err,client)=>{
+    Client.connect(url,(err,client)=>{  // 클라이언트가 /recipe로 접근하면 요 정보 줘라.
         var db=client.db("mydb");
         db.collection("recipe").find({}).skip(skip_data).limit(rowSize)
             .toArray((err,docs)=>{

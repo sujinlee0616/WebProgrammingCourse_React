@@ -16,6 +16,7 @@
  5. sistg-redux-project2 : React, Redux, ReactHooks          
   webpack으로 bundle.js 생성      
   Terminal1: node food-server  / Terminal 2: npm run build       
+ 6. react-chat-project           
       
        
 

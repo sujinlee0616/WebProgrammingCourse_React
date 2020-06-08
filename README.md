@@ -17,9 +17,9 @@
   webpack으로 bundle.js 생성      
   Terminal1: node food-server  / Terminal 2: npm run build       
  6. react-chat-project           
-      
+  채팅 component 생성     
        
-
+         
 ### WebProgrammingCourse_React      
  1. sistg-react-project
    : React lifecycle, JSX, props, state     

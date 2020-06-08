@@ -12,14 +12,14 @@ class App extends Component{
   constructor(props) {
     super(props);
     this.state={
-      /*movie:[],*/
+      movie:[],
       logs:[] // logs: 채팅문자열. 채팅 로그.
     }
   }
   componentDidMount() {
-   /* axios.get("http://localhost:3355/movie").then((result)=>{
+    axios.get("http://localhost:3355/movie").then((result)=>{
       this.setState({movie:result.data})
-    })*/
+    })
 
     socket.on('chat_msg',(obj)=>{ // 서버가 보내준 obj를 받아서 (유저가 새로운 채팅을 입력하면)
       const log2=this.state.logs; // log2에 1) logs(기존에 있던 채팅대화)를 넣고
@@ -47,10 +47,10 @@ class App extends Component{
 
     //스크롤이벤트가 발생하면
     $(window).scroll(function(){
-      var yPosition = $win.scrollTop()+300;
+      var yPosition = $win.scrollTop()+600;
       if (yPosition< 0)
       {
-        yPosition = $win.scrollTop()+300;
+        yPosition = $win.scrollTop()+600;
       }
       $layer.animate({"top":yPosition }, {duration:speed, easing:easing, queue:false});
     });
@@ -58,7 +58,7 @@ class App extends Component{
 
   render() {
     // return 안에는 for문 들어갈 수 없음 ==> 반복문 하려면 return 밖에서 html 생성해서 그걸 호출해야함. ==> const html=... 해서 호출하자.
-   /* const html=this.state.movie.map((m)=>
+    const html=this.state.movie.map((m)=>
         <div className="col-md-4">
           <div className="thumbnail">
             <img src={m.poster} alt="Lights" style={{"width": "100%"}}/>
@@ -67,14 +67,14 @@ class App extends Component{
             </div>
           </div>
         </div>
-    )*/
+    )
     // [HTML 출력]
     // return 안에는 for문 들어갈 수 없음 ==> 반복문 하려면 return 밖에서 html 생성해서 그걸 호출해야함.
     return (
         <React.Fragment>
-          {/*<div className={"row"}>*/}
-           {/* {html}*/}
-          {/*</div>*/}
+          <div className={"row"}>
+            {html}
+          </div>
           <ChatMain logs={this.state.logs}/>
           {/* App에서 props를 받았는데 ChatMain에서 출력해야함 ==> ChatMain에 props 값 넘겨준다. */}
         </React.Fragment>
